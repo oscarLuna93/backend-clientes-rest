@@ -1,9 +1,13 @@
 package com.oscar.springboot.app.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,8 +36,25 @@ public class ClienteRestController {
 	}
 	
 	@GetMapping("/clientes/{id}")
-	public Cliente obtenerClienteById(@PathVariable Long id) {
-		return clienteService.findById(id);
+	public ResponseEntity<?> obtenerClienteById(@PathVariable Long id) {
+		Cliente cliente = null;
+		
+		Map<String, Object> response = new HashMap<String, Object>();
+		
+		try {
+			cliente = clienteService.findById(id);
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al obtener cliente");
+			response.put("excepcion", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		if (cliente == null) {
+			response.put("mensaje", "El cliente ID: ".concat(id.toString().concat(" no existe en la BD")));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<Cliente>(cliente, HttpStatus.OK);
 	}
 	
 	@PostMapping("/clientes")
