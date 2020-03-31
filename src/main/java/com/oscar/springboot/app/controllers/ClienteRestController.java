@@ -9,6 +9,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -31,12 +33,19 @@ import com.oscar.springboot.app.models.services.IClienteService;
 @CrossOrigin(origins = {"http://localhost:4200"})
 public class ClienteRestController {
 	
+	private static final int REGISTROS_POR_PAGINA = 5;
+	
 	@Autowired
 	private IClienteService clienteService;
 	
 	@GetMapping("/clientes")
 	public List<Cliente> listar() {
 		return clienteService.findAll();
+	}
+	
+	@GetMapping("/clientes/page/{page}")
+	public Page<Cliente> listar(@PathVariable Integer page) {
+		return clienteService.findAll(PageRequest.of(page, REGISTROS_POR_PAGINA));
 	}
 	
 	@GetMapping("/clientes/{id}")
