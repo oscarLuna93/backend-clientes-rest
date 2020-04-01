@@ -125,6 +125,8 @@ public class ClienteRestController {
 			clienteActual.setNombre(cliente.getNombre());
 			clienteActual.setApellido(cliente.getApellido());
 			clienteActual.setEmail(cliente.getEmail());
+			clienteActual.setCreateAt(cliente.getCreateAt());
+			
 			clienteNuevo = clienteService.save(clienteActual);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al insertar en BD");
