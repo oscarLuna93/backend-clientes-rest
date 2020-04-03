@@ -34,7 +34,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.oscar.springboot.app.models.entity.Cliente;
+import com.oscar.springboot.app.models.entity.Region;
 import com.oscar.springboot.app.models.services.IClienteService;
+import com.oscar.springboot.app.models.services.IRegionService;
 import com.oscar.springboot.app.models.services.IUploadFileService;
 
 @RestController
@@ -51,6 +53,9 @@ public class ClienteRestController {
 	
 	@Autowired
 	private IUploadFileService uploadService;
+	
+	@Autowired
+	private IRegionService regionService;
 	
 	@GetMapping("/clientes")
 	public List<Cliente> listar() {
@@ -140,6 +145,7 @@ public class ClienteRestController {
 			clienteActual.setApellido(cliente.getApellido());
 			clienteActual.setEmail(cliente.getEmail());
 			clienteActual.setCreateAt(cliente.getCreateAt());
+			clienteActual.setRegion(cliente.getRegion());
 			
 			clienteNuevo = clienteService.save(clienteActual);
 		} catch (DataAccessException e) {
@@ -223,5 +229,10 @@ public class ClienteRestController {
 		cabecera.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+ recurso.getFilename()+"\"");
 		
 		return new ResponseEntity<Resource>(recurso, cabecera, HttpStatus.OK);
+	}
+	
+	@GetMapping("/clientes/regiones")
+	public List<Region> listarRegiones() {
+		return regionService.findAllRegiones();
 	}
 }
