@@ -412,3 +412,13 @@ INSERT INTO clientes (region_id, nombre, apellido, email, create_at) VALUES(8, '
 INSERT INTO clientes (region_id, nombre, apellido, email, create_at) VALUES(1, 'Joe', 'Bloggs', 'joe.bloggs@gmail.com', '2017-08-23');
 INSERT INTO clientes (region_id, nombre, apellido, email, create_at) VALUES(2, 'John', 'Stiles', 'john.stiles@gmail.com', '2017-08-24');
 INSERT INTO clientes (region_id, nombre, apellido, email, create_at) VALUES(3, 'Richard', 'Roe', 'stiles.roe@gmail.com', '2017-08-25');
+
+INSERT INTO `usuarios` (username, password, enabled) VALUES ('oscar', '$2a$10$FD9GJGWkT7K4xU4UN/BVo.xS3jIkA6Rfh.SXd6L0dau0aR9VAPBSq', 1);
+INSERT INTO `usuarios` (username, password, enabled) VALUES ('admin', '$2a$10$eYG4XC632s7Dsfvbx/xdV.G93WjvTlZp1WAjqFvrNbej5xplgYRJu', 1);
+
+INSERT INTO `roles` (nombre) VALUES ('ROLE_USER');
+INSERT INTO `roles` (nombre) VALUES ('ROLE_ADMIN');
+
+INSERT INTO `usuarios_roles` (usuario_id, role_id) VALUES (1, 1);
+INSERT INTO `usuarios_roles` (usuario_id, role_id) VALUES (2, 2);
+INSERT INTO `usuarios_roles` (usuario_id, role_id) VALUES (1, 1);
