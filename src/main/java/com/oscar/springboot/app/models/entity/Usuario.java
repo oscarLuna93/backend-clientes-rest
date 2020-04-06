@@ -33,6 +33,13 @@ public class Usuario implements Serializable{
 	
 	private boolean enabled;
 	
+	private String nombre;
+
+	private String apellido;
+
+	@Column(unique = true)
+	private String email;
+
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	//para personalizar la tabla de relacion
 	@JoinTable(name = "user_autorities"
@@ -81,4 +88,27 @@ public class Usuario implements Serializable{
 		this.roles = roles;
 	}
 
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getApellido() {
+		return apellido;
+	}
+
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 }
