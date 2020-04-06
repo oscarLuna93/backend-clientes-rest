@@ -12,6 +12,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 @Configuration
 @EnableAuthorizationServer
@@ -45,10 +46,16 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter{
 		endpoints.authenticationManager(authenticationManager)
 		.accessTokenConverter(accessTokenConverter());
 	}
+	
+	@Bean
+	public JwtTokenStore tokenStore() {
+		return new JwtTokenStore(accessTokenConverter());
+	}
 
 	@Bean
 	public JwtAccessTokenConverter accessTokenConverter() {
 		JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
+		jwtAccessTokenConverter.setSigningKey(JwtConfig.LLAVE_SECRETA);
 		return jwtAccessTokenConverter;
 	}
 	
