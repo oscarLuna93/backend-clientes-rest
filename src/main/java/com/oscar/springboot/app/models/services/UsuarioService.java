@@ -19,7 +19,7 @@ import com.oscar.springboot.app.models.dao.IUsuarioDao;
 import com.oscar.springboot.app.models.entity.Usuario;
 
 @Service
-public class UsuarioService implements UserDetailsService{
+public class UsuarioService implements IUsuarioService, UserDetailsService{
 
 	Logger log = LoggerFactory.getLogger(UsuarioService.class);
 	
@@ -42,6 +42,11 @@ public class UsuarioService implements UserDetailsService{
 				.collect(Collectors.toList());
 		
 		return new User(usuario.getUsername(), usuario.getPassword(), usuario.isEnabled(), true, true, true, roles);
+	}
+
+	@Override
+	public Usuario findByUsername(String username) {
+		return usuarioDao.findByUsername(username);
 	}
 
 }
