@@ -9,13 +9,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.oscar.springboot.app.models.dao.IClienteDao;
+import com.oscar.springboot.app.models.dao.IFacturaDao;
 import com.oscar.springboot.app.models.entity.Cliente;
+import com.oscar.springboot.app.models.entity.Factura;
 
 @Service
 public class ClienteServiceImpl implements IClienteService{
 
 	@Autowired
 	private IClienteDao clienteDao;
+	
+	@Autowired
+	private IFacturaDao facturaDao;
 	
 	@Override
 	@Transactional(readOnly = true)
@@ -30,18 +35,39 @@ public class ClienteServiceImpl implements IClienteService{
 	}
 	
 	@Override
+	@Transactional
 	public Cliente save(Cliente cliente) {
 		return clienteDao.save(cliente);
 	}
 
 	@Override
+	@Transactional
 	public void delete(Long id) {
 		clienteDao.deleteById(id);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Cliente findById(Long id) {
 		return clienteDao.findById(id).orElse(null);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Factura findFacturaById(Long id) {
+		return facturaDao.findById(id).orElse(null);
+	}
+
+	@Override
+	@Transactional
+	public Factura saveFactura(Factura factura) {
+		return facturaDao.save(factura);
+	}
+
+	@Override
+	@Transactional
+	public void deleteFacturaById(Long id) {
+		facturaDao.deleteById(id);
 	}
 
 }
