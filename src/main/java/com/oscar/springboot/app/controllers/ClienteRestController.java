@@ -68,7 +68,7 @@ public class ClienteRestController {
 		return clienteService.findAll(PageRequest.of(page, REGISTROS_POR_PAGINA));
 	}
 	
-	@Secured({"ROLE_ADMIN", "ROLE_USER"})
+	//@Secured({"ROLE_ADMIN", "ROLE_USER"})
 	@GetMapping("/clientes/{id}")
 	public ResponseEntity<?> obtenerClienteById(@PathVariable Long id) {
 		Cliente cliente = null;
