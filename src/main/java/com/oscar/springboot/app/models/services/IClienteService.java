@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 import com.oscar.springboot.app.models.entity.Cliente;
 import com.oscar.springboot.app.models.entity.Factura;
+import com.oscar.springboot.app.models.entity.Producto;
 
 public interface IClienteService {
 	public List<Cliente> findAll();
@@ -17,4 +18,5 @@ public interface IClienteService {
 	public Factura findFacturaById(Long id);
 	public Factura saveFactura(Factura factura);
 	public void deleteFacturaById(Long id);
+	public List<Producto> findProductoByNombre(String term);
 }

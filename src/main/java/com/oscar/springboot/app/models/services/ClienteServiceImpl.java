@@ -10,8 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.oscar.springboot.app.models.dao.IClienteDao;
 import com.oscar.springboot.app.models.dao.IFacturaDao;
+import com.oscar.springboot.app.models.dao.IProductoDao;
 import com.oscar.springboot.app.models.entity.Cliente;
 import com.oscar.springboot.app.models.entity.Factura;
+import com.oscar.springboot.app.models.entity.Producto;
 
 @Service
 public class ClienteServiceImpl implements IClienteService{
@@ -21,6 +23,9 @@ public class ClienteServiceImpl implements IClienteService{
 	
 	@Autowired
 	private IFacturaDao facturaDao;
+	
+	@Autowired
+	private IProductoDao productoDao;
 	
 	@Override
 	@Transactional(readOnly = true)
@@ -68,6 +73,12 @@ public class ClienteServiceImpl implements IClienteService{
 	@Transactional
 	public void deleteFacturaById(Long id) {
 		facturaDao.deleteById(id);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Producto> findProductoByNombre(String term) {
+		return productoDao.findByNombre(term);
 	}
 
 }
